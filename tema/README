@@ -1,0 +1,48 @@
+@ gauss_filter.m: Implementarea filtrului gaussian.
+
+@ gabor_filter.m: Implementarea filtrelor Gabor.
+
+@ get_mean_stdd.m: Calculează media și deviația standar a unui șir dat.
+
+@ main.m:
+    # plot_figs: Cerințele 1, 2 și 3
+            Afișează graficele pentru filtrele Gabor sin și cos pentru primele
+        valori de intrare date, apoi spectrul concatenat al tuturor filtrelor
+        cos calculate.
+
+    # method == 0: Cerința 4
+            Aplic convoluția cu filtrul Gabor cos pe toate sunetele de la
+        intrare și extrag media și deviația standard pentru fiecare sunet.
+
+            Accuracy on train: 0.65
+            Accuracy on test:  0.56
+
+    # method == 1: Cerința 5
+            Aplic convoluția cu filtre Gabor pe toate sunetele primite, dar
+        nu pe intreaga lor dimensiune, ci pe ferestre de lungime K, adică
+        lungimea dată a unui filtru, reprezentând 25 de milisecunde din sunet,
+        cu spații de lungime S între ele (corespunzătoare a 10 milisecunde
+        sau K / 2.5). Pentru toate cele trei filtre, calculez rezultatele
+        convoluțiilor și le adun în matrici de dimensiune M x F, din care obțin
+        o medie pentru toate sunetele. Apoi, calculez O din Oc și Os, conform
+        relației date, care, matematic, este chiar norma sau modulul valorii
+        complexe Oe. Am verificat egalitatea dintre O și Oe prin calcularea
+        unei norme a diferenței lor, din care am obținut o eroare de ordinul
+        10^(-7).
+
+            Difference on train: 0.0000005187
+              Accuracy on train: 0.67
+
+            Difference on test: 0.0000008567
+              Accuracy on test: 0.55
+
+    # Bonus:
+            Pentru a crește acuratețea, și pentru a calcula corect Oc, Os și
+        Oe, am aplicat întâi un filtru cos, apoi un filtru sin pe rezultat.
+        Aplicarea acestor două filtre consecutiv este echivalentă cu aplicarea
+        filtrului complex, deci era necesar calculului tensorilor, dar a și dus
+        la o acuratețe cu aproape 10 procente mai mare decât aplicarea unui
+        singur filtru, în condițiile în care nu toate eșantioanele sunetelor
+        erau procesate, ci doar F ferestre de lungime K. Un alt factor care a
+        contribuit la creșterea acurateței în această metodă a fost aplicarea
+        funcției conv() din Octave cu opțiunea 'same'.
