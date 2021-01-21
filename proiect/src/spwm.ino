@@ -1,13 +1,17 @@
+// ================================================================================
+
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
 constexpr auto SAMPLES    = 1 << 8;
 constexpr auto SIZE       = SAMPLES * 2;
-constexpr auto SIN_FREQ   = 200;
+constexpr auto SIN_FREQ   = 100;
 constexpr auto CLOCK_FREQ = 16000000;
 constexpr auto PERIOD     = CLOCK_FREQ / SIN_FREQ / SIZE;
 
 auto sine = new int[SIZE];
+
+// ================================================================================
 
 void setup()
 {
@@ -26,6 +30,8 @@ void setup()
         sine[i] = 0.5 + sin(M_PI * i / SAMPLES) * PERIOD;
 }
 
+// ================================================================================
+
 void loop() {}
 
 ISR(TIMER1_OVF_vect)
@@ -43,3 +49,5 @@ ISR(TIMER1_OVF_vect)
        digitalWrite(13, trigger);
     }
 }
+
+// ================================================================================
